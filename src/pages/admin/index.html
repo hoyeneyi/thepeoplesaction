@@ -1,0 +1,168 @@
+<!--page title="Staff portal — The Peoples Action" description="Staff portal for The Peoples Action website." body="page-admin" noindex -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{{title}}</title>
+<link rel="icon" href="/assets/img/tpa-seal-32.png" sizes="32x32" type="image/png">
+<link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/admin.css">
+<script type="module" src="/assets/js/admin.js"></script>
+</head>
+<body class="admin">
+<a class="skip-link" href="#admin-main">Skip to content</a>
+<header class="admin-bar">
+  <a class="brand" href="/" aria-label="View the public website">
+    <img src="/assets/img/tpa-seal-96.png" alt="" width="40" height="40">
+    <span class="brand-name">TPA<small>Staff portal</small></span>
+  </a>
+  <div class="admin-user" data-user hidden>
+    <span data-user-email></span>
+    <button class="btn btn--sm btn--ghost" type="button" data-signout>Sign out</button>
+  </div>
+</header>
+
+<main id="admin-main" class="admin-main">
+  <!-- Not configured -->
+  <section class="admin-card" data-view="setup" hidden>
+    <span class="tag">Setup needed</span>
+    <h1>Connect the staff portal</h1>
+    <p>The website is running in <strong>static mode</strong>: pages, photos and donations work, but the live calendar, editable text, team editor and message inbox need a free Firebase project.</p>
+    <ol>
+      <li>Follow <strong>docs/ADMIN-GUIDE.md → “One-time setup”</strong> in the website repository.</li>
+      <li>Paste the Firebase web config into <code>assets/js/config.js</code>.</li>
+      <li>Deploy <code>firebase/firestore.rules</code>, create your staff login, and add it as an admin.</li>
+    </ol>
+  </section>
+
+  <!-- Sign in -->
+  <section class="admin-card admin-login" data-view="login" hidden aria-labelledby="login-title">
+    <span class="tag">Staff only</span>
+    <h1 id="login-title">Sign in</h1>
+    <form class="form" data-login-form novalidate>
+      <div class="field">
+        <label for="lg-email">Email</label>
+        <input class="input" id="lg-email" name="email" type="email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="lg-pass">Password</label>
+        <input class="input" id="lg-pass" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--gold" type="submit">Sign in</button>
+        <button class="btn btn--ghost" type="button" data-reset>Forgot password?</button>
+      </div>
+      <div class="form-status" data-login-status role="status" aria-live="polite" hidden></div>
+    </form>
+  </section>
+
+  <!-- Signed in but not an admin -->
+  <section class="admin-card" data-view="denied" hidden>
+    <span class="tag">No access yet</span>
+    <h1>Your account isn’t a staff admin</h1>
+    <p>Ask an existing admin to add you in <strong>Admins</strong>, using this user ID:</p>
+    <p><code data-uid></code></p>
+  </section>
+
+  <!-- Portal -->
+  <div data-view="app" hidden>
+    <nav class="admin-tabs" aria-label="Staff portal sections" role="tablist">
+      <button role="tab" type="button" id="tab-events" aria-controls="panel-events" aria-selected="true" data-tab="events">Events</button>
+      <button role="tab" type="button" id="tab-content" aria-controls="panel-content" aria-selected="false" tabindex="-1" data-tab="content">Page text &amp; banner</button>
+      <button role="tab" type="button" id="tab-team" aria-controls="panel-team" aria-selected="false" tabindex="-1" data-tab="team">Team</button>
+      <button role="tab" type="button" id="tab-inbox" aria-controls="panel-inbox" aria-selected="false" tabindex="-1" data-tab="inbox">Inbox <span class="badge" data-inbox-count hidden></span></button>
+      <button role="tab" type="button" id="tab-admins" aria-controls="panel-admins" aria-selected="false" tabindex="-1" data-tab="admins">Admins</button>
+    </nav>
+
+    <!-- EVENTS -->
+    <section class="admin-panel" role="tabpanel" id="panel-events" aria-labelledby="tab-events">
+      <div class="panel-head">
+        <div><h1>Events</h1><p class="muted">Published events appear on the public calendar immediately.</p></div>
+        <button class="btn btn--gold" type="button" data-new-event>+ New event</button>
+      </div>
+      <div class="seg" role="group" aria-label="Which events">
+        <button type="button" data-ev-filter="upcoming" aria-pressed="true">Upcoming</button>
+        <button type="button" data-ev-filter="past" aria-pressed="false">Past</button>
+        <button type="button" data-ev-filter="drafts" aria-pressed="false">Drafts</button>
+      </div>
+      <div class="admin-list" data-event-list aria-live="polite"></div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="admin-panel" role="tabpanel" id="panel-content" aria-labelledby="tab-content" hidden>
+      <div class="panel-head">
+        <div><h1>Page text &amp; banner</h1><p class="muted">Leave a field blank to use the original wording.</p></div>
+      </div>
+      <form class="form" data-content-form>
+        <fieldset class="admin-fieldset">
+          <legend>Announcement banner</legend>
+          <label class="check"><input type="checkbox" name="active"> Show the banner at the top of every page</label>
+          <div class="field"><label for="an-text">Banner text</label><input class="input" id="an-text" name="text" maxlength="200"></div>
+          <div class="form-row">
+            <div class="field"><label for="an-ltext">Link text <span class="muted">(optional)</span></label><input class="input" id="an-ltext" name="linkText" maxlength="60"></div>
+            <div class="field"><label for="an-lurl">Link address <span class="muted">(optional)</span></label><input class="input" id="an-lurl" name="linkUrl" placeholder="/events/ or https://…" maxlength="300"></div>
+          </div>
+        </fieldset>
+        <div data-cms-fields></div>
+        <div class="sticky-save"><button class="btn btn--gold" type="submit">Save page text</button><span class="muted" data-content-status role="status" aria-live="polite"></span></div>
+      </form>
+    </section>
+
+    <!-- TEAM -->
+    <section class="admin-panel" role="tabpanel" id="panel-team" aria-labelledby="tab-team" hidden>
+      <div class="panel-head">
+        <div><h1>Team</h1><p class="muted">Until you add people here, the site shows the original team listing.</p></div>
+        <div class="btn-row">
+          <button class="btn btn--ghost" type="button" data-import-team>Import current team</button>
+          <button class="btn btn--gold" type="button" data-new-person>+ Add person</button>
+        </div>
+      </div>
+      <div class="admin-list" data-team-list aria-live="polite"></div>
+    </section>
+
+    <!-- INBOX -->
+    <section class="admin-panel" role="tabpanel" id="panel-inbox" aria-labelledby="tab-inbox" hidden>
+      <div class="panel-head">
+        <div><h1>Inbox</h1><p class="muted">Messages and volunteer sign-ups from the website’s contact form.</p></div>
+        <button class="btn btn--ghost" type="button" data-export>Export CSV</button>
+      </div>
+      <div class="seg" role="group" aria-label="Which messages">
+        <button type="button" data-msg-filter="new" aria-pressed="true">New</button>
+        <button type="button" data-msg-filter="handled" aria-pressed="false">Handled</button>
+        <button type="button" data-msg-filter="all" aria-pressed="false">All</button>
+      </div>
+      <div class="admin-list" data-msg-list aria-live="polite"></div>
+    </section>
+
+    <!-- ADMINS -->
+    <section class="admin-panel" role="tabpanel" id="panel-admins" aria-labelledby="tab-admins" hidden>
+      <div class="panel-head"><div><h1>Admins</h1><p class="muted">People who can sign in to this portal.</p></div></div>
+      <ol class="admin-steps">
+        <li>In the Firebase console, open <strong>Authentication → Users → Add user</strong> and create their email + password.</li>
+        <li>Copy their <strong>User UID</strong> and add it below.</li>
+      </ol>
+      <form class="form admin-inline-form" data-admin-form>
+        <div class="field"><label for="ad-uid">User UID</label><input class="input" id="ad-uid" name="uid" required maxlength="128"></div>
+        <div class="field"><label for="ad-email">Email (for reference)</label><input class="input" id="ad-email" name="email" type="email" maxlength="200"></div>
+        <div><button class="btn btn--gold" type="submit">Add admin</button></div>
+      </form>
+      <div class="admin-list" data-admin-list aria-live="polite"></div>
+    </section>
+  </div>
+</main>
+
+<!-- Editor dialog (events / team) -->
+<dialog class="ev-dialog admin-dialog" id="editor" aria-labelledby="editor-title"></dialog>
+<!-- Confirm dialog -->
+<dialog class="ev-dialog admin-dialog admin-confirm" id="confirm" aria-labelledby="confirm-title">
+  <header><h2 id="confirm-title">Are you sure?</h2></header>
+  <div class="body"><p data-confirm-text></p>
+    <div class="btn-row"><button class="btn" type="button" value="ok" data-confirm-ok>Delete</button><button class="btn btn--ghost" type="button" data-confirm-cancel>Cancel</button></div>
+  </div>
+</dialog>
+<div class="toast" role="status" aria-live="polite" data-toast hidden></div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+rules_version = '2';
+// The Peoples Action website — Firestore security rules.
+// Public: read published events, site text, team. Anyone may CREATE a contact message
+// (validated). Everything else requires a signed-in user listed in /admins/{uid}.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function str(v, max) { return v is string && v.size() <= max; }
+    function optStr(d, k, max) { return !(k in d) || str(d[k], max); }
+
+    function validEvent(d) {
+      return d.keys().hasOnly(['title','category','chapter','allDay','start','end','location','address',
+                               'description','link','linkLabel','published','createdAt','updatedAt'])
+        && str(d.title, 140) && d.title.size() > 0
+        && d.start is timestamp
+        && (d.end == null || d.end is timestamp)
+        && d.published is bool
+        && optStr(d, 'category', 40) && optStr(d, 'chapter', 20)
+        && optStr(d, 'location', 140) && optStr(d, 'address', 200)
+        && optStr(d, 'description', 4000) && optStr(d, 'link', 400) && optStr(d, 'linkLabel', 40);
+    }
+
+    function validMessage(d) {
+      return d.keys().hasOnly(['name','email','phone','topic','message','page','status','createdAt'])
+        && str(d.name, 120) && d.name.size() > 0
+        && str(d.email, 200) && d.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && optStr(d, 'phone', 40) && optStr(d, 'topic', 40) && optStr(d, 'page', 200)
+        && str(d.message, 4000) && d.message.size() > 0
+        && d.status == 'new'
+        && d.createdAt == request.time;
+    }
+
+    match /events/{id} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update: if isAdmin() && validEvent(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /site/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /team/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /messages/{id} {
+      allow create: if validMessage(request.resource.data);
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /admins/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+}

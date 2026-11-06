@@ -1,0 +1,48 @@
+<!--page title="Events calendar — The Peoples Action" description="Adopt The Block days, community meetings, workshops and other events from The Peoples Action in Detroit and Houston." body="page-events" nav="events" -->
+{{> head}}
+{{> header}}
+<main id="main">
+  <section class="page-head page-head--plain">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Events</li></ol></nav>
+        <h1>Events <span class="gold-text">calendar</span></h1>
+        <p class="lead" data-cms="events.lead">Block days, community meetings, workshops and trainings. Updated by TPA staff as events are scheduled — check back often.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-calendar aria-labelledby="cal-heading">
+    <div class="wrap">
+      <h2 class="visually-hidden" id="cal-heading">Calendar</h2>
+      <div class="cal-toolbar">
+        <div class="cal-nav" data-cal-nav>
+          <button class="icon-btn" type="button" data-month="-1" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
+          <h2 data-cal-title aria-live="polite">&nbsp;</h2>
+          <button class="icon-btn" type="button" data-month="1" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
+          <button class="btn btn--sm btn--ghost" type="button" data-today>Today</button>
+        </div>
+        <div class="seg" role="group" aria-label="Calendar view">
+          <button type="button" data-view="month" aria-pressed="true">Month</button>
+          <button type="button" data-view="list" aria-pressed="false">Upcoming</button>
+        </div>
+      </div>
+      <div class="filters" data-cal-filters role="group" aria-label="Filter by program"></div>
+      <div class="cal-grid" data-cal-grid aria-hidden="true"></div>
+      <h3 class="kicker" style="margin:2.5rem 0 1rem" data-cal-count aria-live="polite"></h3>
+      <div data-cal-agenda></div>
+    </div>
+  </section>
+
+  <section class="section on-gold" aria-labelledby="host-title">
+    <div class="wrap cta-band">
+      <h2 id="host-title">Want TPA on your block?</h2>
+      <div class="btn-row">
+        <a class="btn" href="/contact-us/?topic=block-club#contact-form">Organize a block club</a>
+        <a class="btn btn--ghost" href="/contact-us/?topic=volunteer#contact-form">Volunteer at an event</a>
+      </div>
+    </div>
+  </section>
+</main>
+<script type="module" src="/assets/js/events.js"></script>
+{{> footer}}
