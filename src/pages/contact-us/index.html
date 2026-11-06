@@ -1,0 +1,95 @@
+<!--page title="Get involved & contact — The Peoples Action" description="Volunteer with The Peoples Action, organize a block club, register for property tax help, or send us a message." body="page-contact" nav="contact" -->
+{{> head}}
+{{> header}}
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Get involved</li></ol></nav>
+        <h1>Get <span class="gold-text">involved</span></h1>
+        <p class="lead" data-cms="contact.lead">Volunteer, organize your block, ask for help, or just say hello. A real person from TPA reads every message.</p>
+      </div>
+      <figure class="page-head-photo">
+        {{img src="volunteer-atb-shirt" alt="A smiling volunteer in glasses and an Adopt The Block shirt stands in a park." sizes="(max-width: 860px) 100vw, 40vw" eager pos="50% 30%"}}
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="volunteer" aria-labelledby="vol-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="tag">Wanna volunteer with TPA?</span><h2 id="vol-title" style="margin-top:1rem">Pick your way in</h2></div>
+        <p class="lead muted">Choose what fits — the form below will be set up for you.</p>
+      </div>
+      <ol class="index-list">
+        <li><h3>Adopt The Block</h3><p>Clean-ups, landscaping, resource days and recreational activities. <a href="?topic=volunteer#contact-form" data-topic="volunteer">Volunteer on a block</a></p></li>
+        <li><h3>Organize a block club</h3><p>Bring neighbors together on your street with TPA’s support. <a href="?topic=block-club#contact-form" data-topic="block-club">Start a block club</a></p></li>
+        <li><h3>The Peoples Army</h3><p>Self-defense trainings, violence prevention and search parties. <a href="?topic=army#contact-form" data-topic="army">Join the Army</a></p></li>
+        <li><h3>The Peoples Politics</h3><p>Canvassing and voter education. <a href="?topic=politics#contact-form" data-topic="politics">Canvass with us</a></p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section on-paper2" id="contact-form" aria-labelledby="form-title">
+    <div class="wrap split">
+      <div class="stack">
+        <span class="tag">Contact us</span>
+        <h2 id="form-title">Send a message</h2>
+        <p>Need help with a property tax exemption application? Want to bring a workshop to your community? Media or partnership question? Use the form and choose a topic.</p>
+        <div class="callout" style="box-shadow:6px 6px 0 var(--navy)">
+          <h3>Other ways to reach us</h3>
+          <p style="margin-bottom:.5rem">Email: <a href="mailto:info@thepeoplesaction.com">info@thepeoplesaction.com</a></p>
+          <p style="margin:0">Message us on <a href="https://www.facebook.com/thepeoplesaction" target="_blank" rel="noopener">Facebook</a> or <a href="https://www.instagram.com/thepeoplesaction" target="_blank" rel="noopener">Instagram</a>.</p>
+        </div>
+      </div>
+      <form class="form" data-contact-form novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-name">Name <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="cf-name" name="name" autocomplete="name" required maxlength="120" aria-describedby="cf-name-err">
+            <p class="field-error" id="cf-name-err" hidden>Please enter your name.</p>
+          </div>
+          <div class="field">
+            <label for="cf-email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="cf-email" name="email" type="email" autocomplete="email" required maxlength="200" aria-describedby="cf-email-err">
+            <p class="field-error" id="cf-email-err" hidden>Please enter a valid email address.</p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-phone">Phone <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:500">(optional)</span></label>
+            <input class="input" id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+          </div>
+          <div class="field">
+            <label for="cf-topic">Topic</label>
+            <select class="select" id="cf-topic" name="topic">
+              <option value="general">General question</option>
+              <option value="volunteer">Volunteer — Adopt The Block</option>
+              <option value="block-club">Organize a block club</option>
+              <option value="property-tax">Property tax foreclosure help</option>
+              <option value="entrepreneur">Entrepreneur workshop</option>
+              <option value="resources">Community resources</option>
+              <option value="army">The Peoples Army</option>
+              <option value="politics">The Peoples Politics / canvassing</option>
+              <option value="houston">TPA Houston</option>
+              <option value="donation">Donations</option>
+              <option value="media">Media or partnership</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message <span class="req" aria-hidden="true">*</span></label>
+          <textarea class="textarea" id="cf-message" name="message" required maxlength="4000" aria-describedby="cf-message-err cf-message-hint"></textarea>
+          <p class="hint" id="cf-message-hint">For property tax help, include your neighborhood or ZIP code and the best time to call.</p>
+          <p class="field-error" id="cf-message-err" hidden>Please add a short message.</p>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="cf-website">Website</label><input id="cf-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <p class="hint" style="margin:0"><span class="req" aria-hidden="true">*</span> Required. We use your details only to respond to you.</p>
+        <div><button class="btn btn--gold" type="submit">Send message</button></div>
+        <div class="form-status" data-form-status role="status" aria-live="polite" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+<script type="module" src="/assets/js/contact.js"></script>
+{{> footer}}

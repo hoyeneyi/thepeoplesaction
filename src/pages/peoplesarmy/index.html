@@ -1,0 +1,64 @@
+<!--page title="The Peoples Army — The Peoples Action" description="The Peoples Army is a division of The Peoples Action creating programs around self-defense, violence-reduction tactics and search parties for missing citizens." body="page-army" nav="programs" -->
+{{> head}}
+{{> header}}
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li>Programs</li><li aria-current="page">The Peoples Army</li></ol></nav>
+        <h1>The Peoples <span class="gold-text">Army</span></h1>
+        <p class="lead" data-cms="army.lead">Our mission is to protect and preserve the safety of the underserved population in the U.S.</p>
+        <div class="btn-row" style="margin-top:2rem">
+          <a class="btn btn--gold" href="/contact-us/?topic=army#contact-form">Join a training</a>
+          <a class="btn btn--ghost" href="/events/">See the calendar</a>
+        </div>
+      </div>
+      <figure class="page-head-photo">
+        {{img src="army-1" alt="An instructor demonstrates a self-defense block with a woman during a training session." sizes="(max-width: 860px) 100vw, 40vw" eager}}
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="what-title">
+    <div class="wrap split">
+      <div>
+        <span class="tag">A division of TPA</span>
+        <h2 id="what-title" style="margin-top:1rem">Safety is a community skill</h2>
+      </div>
+      <div class="stack">
+        <p class="lead">The Peoples Army creates comprehensive programs geared around self-defense, preventative tactics for the reduction of violence, and search parties for missing citizens in the community.</p>
+        <ol class="index-list">
+          <li><h3>Self-defense</h3><p>Hands-on training for adults and young people.</p></li>
+          <li><h3>Violence prevention</h3><p>Preventative tactics aimed at reducing violence before it happens.</p></li>
+          <li><h3>Search parties</h3><p>Organizing the community to search for missing citizens.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-ink" aria-labelledby="train-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="tag">In the room</span><h2 id="train-title" style="margin-top:1rem">Training together</h2></div>
+        <p class="lead">Parents, children and instructors learning the same moves, side by side.</p>
+      </div>
+      <div class="essay">
+        <figure class="photo e1">{{img src="army-2" alt="A group of women and children practice self-defense stances in a hall decorated with flags." sizes="(max-width: 760px) 100vw, 58vw"}}<figcaption>Group self-defense class</figcaption></figure>
+        <figure class="photo e2">{{img src="army-4" alt="An instructor in a red shirt shows two young girls a technique using a wooden stick while a woman watches." sizes="(max-width: 760px) 100vw, 42vw"}}<figcaption>Youth session</figcaption></figure>
+        <figure class="photo e3">{{img src="army-3" alt="Children take turns practicing a technique with an instructor." sizes="(max-width: 760px) 100vw, 42vw"}}<figcaption>Taking turns</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="army-events">
+    <div class="wrap">
+      <div class="events-head">
+        <div><span class="tag">Calendar</span><h2 id="army-events" style="margin-top:1rem">Upcoming trainings</h2></div>
+        <a class="link-arrow" href="/events/">Full calendar <span aria-hidden="true">→</span></a>
+      </div>
+      <div data-events="upcoming" data-category="army" data-limit="4" aria-live="polite"><p class="muted">Loading events…</p></div>
+    </div>
+  </section>
+</main>
+<script type="module" src="/assets/js/events.js"></script>
+{{> footer}}
