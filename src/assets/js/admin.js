@@ -4,6 +4,7 @@
 import { FIREBASE_CONFIG, FIREBASE_SDK, STORAGE_ENABLED } from './config.js';
 import { firebase, normalizeEvent } from './data.js';
 import { CATEGORIES, CHAPTERS, categoryLabel } from './categories.js';
+import { url } from './base.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -254,7 +255,7 @@ function initEvents() {
 async function initContent() {
   const form = $('[data-content-form]');
   const [registry, snap] = await Promise.all([
-    fetch('/assets/data/cms-fields.json').then((r) => r.json()).catch(() => []),
+    fetch(url('/assets/data/cms-fields.json')).then((r) => r.json()).catch(() => []),
     fs.getDoc(fs.doc(db, 'site', 'content')),
   ]);
   const data = snap.exists() ? snap.data() : {};
@@ -314,7 +315,7 @@ function renderTeam() {
   $('[data-team-list]').innerHTML = team.length
     ? CHAPTERS.map((c) => `<h2 class="kicker" style="margin-top:1rem">${esc(c.label)}</h2>` + (by(c.id).map((p) => `
       <article class="admin-row${p.visible === false ? ' is-draft' : ''}">
-        <div class="row-with-thumb">${p.photoUrl ? `<img class="thumb" src="${esc(p.photoUrl)}" alt="">` : '<span class="thumb" aria-hidden="true"></span>'}
+        <div class="row-with-thumb">${p.photoUrl ? `<img class="thumb" src="${esc(url(p.photoUrl))}" alt="">` : '<span class="thumb" aria-hidden="true"></span>'}
           <div><h3>${esc(p.name)} ${p.visible === false ? '<span class="pill">Hidden</span>' : ''}</h3><div class="meta"><span>${esc(p.role)}</span><span>Order ${esc(p.order ?? '–')}</span></div></div></div>
         <div class="actions"><button class="btn btn--sm" type="button" data-edit-person="${p.id}">Edit</button><button class="btn btn--sm btn--ghost" type="button" data-del-person="${p.id}">Remove<span class="visually-hidden"> ${esc(p.name)}</span></button></div>
       </article>`).join('') || '<p class="muted">Nobody listed — the site shows the original listing for this chapter.</p>')).join('')

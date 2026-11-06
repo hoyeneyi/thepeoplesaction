@@ -1,6 +1,7 @@
 // Public calendar: upcoming lists ([data-events]) and the full calendar ([data-calendar]).
 import { watchEvents } from './data.js';
 import { CATEGORIES, categoryLabel } from './categories.js';
+import { url } from './base.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -52,7 +53,7 @@ function emptyHTML(context) {
     <span class="tag">Check back soon</span>
     <h3>No events scheduled${context ? ' ' + esc(context) : ''} right now</h3>
     <p>New Adopt The Block days, community meetings and workshops are posted here as soon as they are scheduled.</p>
-    <a class="btn btn--sm" href="/contact-us/?topic=volunteer#contact-form">Join the volunteer list</a>
+    <a class="btn btn--sm" href="${url('/contact-us/?topic=volunteer#contact-form')}">Join the volunteer list</a>
   </div>`;
 }
 
@@ -98,7 +99,7 @@ function openDialog(e) {
       </dl>
       ${e.description ? `<div class="prose">${esc(e.description).split(/\n{2,}/).map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}</div>` : ''}
       <div class="btn-row" style="margin-top:1.5rem">
-        ${safeUrl(e.link) ? `<a class="btn btn--gold btn--sm" href="${esc(safeUrl(e.link))}" target="_blank" rel="noopener">${esc(e.linkLabel || 'Register')}</a>` : ''}
+        ${safeUrl(e.link) ? `<a class="btn btn--gold btn--sm" href="${esc(url(safeUrl(e.link)))}" target="_blank" rel="noopener">${esc(e.linkLabel || 'Register')}</a>` : ''}
         <a class="btn btn--sm btn--ghost" href="${googleLink(e)}" target="_blank" rel="noopener">Add to Google Calendar</a>
         <a class="btn btn--sm btn--ghost" href="${icsBlob(e)}" download="${esc(e.title.replace(/[^\w ]+/g, '').trim() || 'event')}.ics">Download .ics</a>
       </div>

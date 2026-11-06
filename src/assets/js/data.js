@@ -1,6 +1,7 @@
 // Data layer shared by the public site and the admin portal.
 // Firestore when configured; static JSON fallback otherwise.
 import { FIREBASE_CONFIG, FIREBASE_SDK } from './config.js';
+import { url } from './base.js';
 
 let fb = null; // { app, db, fs, auth?, authMod? }
 
@@ -52,7 +53,7 @@ const override = () => (typeof window !== 'undefined' && window.__TPA_DATA) || n
 
 async function staticJson(path, fallback) {
   try {
-    const r = await fetch(path, { cache: 'no-cache' });
+    const r = await fetch(url(path), { cache: 'no-cache' });
     if (!r.ok) return fallback;
     return await r.json();
   } catch {

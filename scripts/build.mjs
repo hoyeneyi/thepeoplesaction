@@ -14,6 +14,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(root, 'src');
 const OUT = join(root, 'public');
 const SITE_URL = 'https://www.thepeoplesaction.org';
+// Optional sub-path for previews, e.g. BASE_PATH=/thepeoplesaction for a GitHub Pages project site.
+const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
+const withBase = (html) => !BASE ? html : html
+  .replace(/<html lang="en"/, `<html lang="en" data-base="${BASE}"`)
+  .replace(/(\s(?:href|src|action)=")\/(?!\/)/g, `$1${BASE}/`)
+  .replace(/(srcset="[^"]*)/g, (m) => m.replace(/(^srcset="|,\s*)\/assets\//g, `$1${BASE}/assets/`));
 
 function walk(dir) {
   return readdirSync(dir).flatMap((name) => {
@@ -88,7 +94,7 @@ for (const file of walk(pagesDir).filter((f) => f.endsWith('.html'))) {
   if (meta.nav) html = html.replace(new RegExp(`data-nav="${meta.nav}"`, 'g'), `data-nav="${meta.nav}" aria-current="page"`);
   const dest = join(OUT, rel);
   mkdirSync(dirname(dest), { recursive: true });
-  writeFileSync(dest, html);
+  writeFileSync(dest, withBase(html));
   if (!meta.noindex && rel !== '404.html') sitemap.push(SITE_URL + urlPath);
 }
 

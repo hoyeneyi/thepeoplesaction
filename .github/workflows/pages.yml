@@ -1,4 +1,5 @@
 # Builds the site and deploys public/ to GitHub Pages on every push to main.
+# Works both on <user>.github.io/<repo>/ (preview) and on a custom domain.
 # One-time: repo Settings → Pages → Source: "GitHub Actions".
 name: Deploy site
 on:
@@ -23,7 +24,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - id: pages
+        uses: actions/configure-pages@v5
+      # base_path is "/<repo>" on a github.io project site and "" on a custom domain
       - run: node scripts/build.mjs
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public

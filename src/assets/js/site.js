@@ -1,5 +1,6 @@
 // Global behaviour: navigation, editable text, announcement banner, team overrides.
 import { loadContent, loadTeam } from './data.js';
+import { url } from './base.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -60,7 +61,7 @@ function applyContent(content) {
     $('[data-announce-text]', bar).textContent = a.text;
     const link = $('[data-announce-link]', bar);
     if (a.linkUrl && /^(https?:\/\/|\/)/.test(a.linkUrl)) {
-      link.href = a.linkUrl;
+      link.href = url(a.linkUrl);
       link.textContent = a.linkText || 'Learn more';
       link.hidden = false;
     }
@@ -80,7 +81,7 @@ async function applyTeam() {
   if (!people) return;
   host.innerHTML = people.map((p) => `
     <article class="person">
-      <figure class="photo">${safeUrl(p.photoUrl) ? `<img src="${esc(safeUrl(p.photoUrl))}" alt="Portrait of ${esc(p.name)}" loading="lazy">` : ''}</figure>
+      <figure class="photo">${safeUrl(p.photoUrl) ? `<img src="${esc(url(safeUrl(p.photoUrl)))}" alt="Portrait of ${esc(p.name)}" loading="lazy">` : ''}</figure>
       <h3>${esc(p.name)}</h3>
       <p class="role kicker muted">${esc(p.role)}</p>
       ${p.bio ? `<details><summary>Read bio</summary><p>${esc(p.bio)}</p></details>` : ''}
