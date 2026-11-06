@@ -1,0 +1,23 @@
+{
+  "name": "thepeoplesaction-website",
+  "version": "2.0.0",
+  "description": "The Peoples Action (Detroit) website — static site + Firebase-backed calendar and staff portal",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node tests/qa.mjs",
+    "shots": "npm run build && SHOTS=1 node tests/qa.mjs",
+    "serve": "npm run build && node -e \"import('./tests/serve.mjs').then(m=>m.serve(process.cwd()+'/public',8080)).then(s=>console.log(s.url))\""
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@fontsource-variable/archivo": "^5.0.20",
+    "@fontsource/public-sans": "^5.0.18",
+    "@fontsource/source-serif-4": "^5.0.19",
+    "axe-core": "^4.9.1"
+  },
+  "private": true,
+  "type": "module"
+}
